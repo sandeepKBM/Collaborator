@@ -1,38 +1,46 @@
 package com.annauniv.server.controller;
 
-import com.annauniv.server.model.Role;
-import com.annauniv.server.model.User;
-import com.annauniv.server.service.UserServiceImplementation;
-import lombok.RequiredArgsConstructor;
+import com.annauniv.server.authentication.UserAccountService;
+import com.annauniv.server.exception.UserAlreadyExistsException;
+import com.annauniv.server.relational.UserAccount;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import java.net.URI;
-import java.util.List;
 
-@RequiredArgsConstructor
 @RestController
-@RequestMapping("/api")
+@RequestMapping("/api/v1/users")
 public class UserController {
 
-    private final UserServiceImplementation userService;
+    private final UserAccountService userAccountService;
 
-
-    @GetMapping("/users")
-    public ResponseEntity<List<User>>getUsers(){
-        return ResponseEntity.ok().body(userService.getUsers());
+    public UserController(UserAccountService userAccountService) {
+        this.userAccountService = userAccountService;
     }
 
-    @PostMapping ("/users/save")
-    public ResponseEntity<User> saveUser(@RequestBody User user){
-        URI uri = URI.create(ServletUriComponentsBuilder.fromCurrentContextPath().path("api/user/save").toUriString());
-        return ResponseEntity.created(uri).body(userService.saveUser(user));
+    @GetMapping("/{userId}")
+    @PreAuthorize("hasAnyRole('ROLE_HEAD_OF_DEPARTMENT', 'ROLE_DEAN')")
+    public ResponseEntity<UserDetails> getUser(@PathVariable("userId") Long userId) {
+        try {
+            return ResponseEntity.ok(userAccountService.loadUserByUsername(Long.toString(userId)));
+        } catch (UsernameNotFoundException e) {
+            return ResponseEntity.notFound().build();
+        }
     }
 
-    @PostMapping ("/role/save")
-    public ResponseEntity<Role> saveRole(@RequestBody Role role){
-        return ResponseEntity.ok().body(userService.saveRole(role));
-    }
+    @PostMapping ("/save")
+    public ResponseEntity<UserDetails> saveUser(@RequestBody UserAccount userAccount) {
+        try {
+            UserDetails addedUser = userAccountService.saveUser(userAccount);
 
+            return new ResponseEntity<>(addedUser, HttpStatus.CREATED);
+        } catch (UserAlreadyExistsException e) {
+            return new ResponseEntity<>(HttpStatus.CONFLICT);
+        }
+    }
 }

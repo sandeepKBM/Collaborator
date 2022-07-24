@@ -20,16 +20,16 @@ function SignUp() {
     <div>
         <center>
             <div id="signup-basic">
-                <label>Typer of user : </label>
+                <label>Typer of userAccount : </label>
                 <br></br>
                 <br></br>
-                <label>Student</label><input type="radio" name="user" value="Student"
+                <label>Student</label><input type="radio" name="userAccount" value="Student"
                 onClick={Stusignup}></input>
                 <br></br>
-                <label>Faculty</label><input type="radio" name="user" value="Faculty"
+                <label>Faculty</label><input type="radio" name="userAccount" value="Faculty"
                 onClick={Facsignup}></input>
                 <br></br>
-                <label>Research</label><input type="radio" name="user" value="Research"
+                <label>Research</label><input type="radio" name="userAccount" value="Research"
                 onClick={Ressignup}></input>
                 <br></br>
                 <br></br>
