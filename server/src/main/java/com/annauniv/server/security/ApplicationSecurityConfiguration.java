@@ -41,6 +41,7 @@ public class ApplicationSecurityConfiguration {
                 .addFilterAfter(new JwtTokenVerifier(secretKey, jwtConfiguration), JwtUsernameAndPasswordAuthenticationFilter.class)
                 .authorizeRequests()
                 .antMatchers("/login").permitAll()
+                .antMatchers("/api/discussions/**").permitAll()
                 .anyRequest()
                 .authenticated();
 
