@@ -33,9 +33,15 @@ public class DiscussionIndex {
         this.discussionName = discussionName;
         this.description = description;
         this.creationDateTime = creationDateTime;
-        AccessClass = accessClass;
+        this.AccessClass = accessClass;
     }
 
+    public DiscussionIndex(Long discussionId, String discussionName, String description, UserAccountDesignation accessClass) {
+        this.discussionId = discussionId;
+        this.discussionName = discussionName;
+        this.description = description;
+        this.AccessClass = accessClass;
+    }
 
     public Long getId() {
         return id;

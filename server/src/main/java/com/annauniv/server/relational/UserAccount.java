@@ -3,6 +3,7 @@ package com.annauniv.server.relational;
 import javax.persistence.*;
 
 import com.annauniv.server.authority.UserAccountDesignation;
+import lombok.NoArgsConstructor;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
@@ -11,8 +12,10 @@ import java.util.Collections;
 import java.util.Set;
 
 @Entity(name = "User")
+@NoArgsConstructor
 public class UserAccount implements UserDetails {
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String name;
     private String password;
@@ -81,5 +84,11 @@ public class UserAccount implements UserDetails {
     @Override
     public boolean isEnabled() {
         return true;
+    }
+
+    public UserAccount(String name, String password, UserAccountDesignation designation) {
+        this.name = name;
+        this.password = password;
+        this.designation = designation;
     }
 }
