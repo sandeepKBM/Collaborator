@@ -48,7 +48,7 @@ public class DiscussionIndexService {
     }
 
     public List<BigInteger> getListofAllUniqueParticipants(Long discussionID){
-        DistinctIterable<DiscussionText> val = mongoTemplate.getCollection("discussionText").distinct("userID", DiscussionText.class);
+        DistinctIterable<DiscussionText> val = mongoTemplate.getCollection("DiscussionText").distinct("userID", DiscussionText.class);
         System.out.println(val);
         Set<BigInteger> result = new HashSet<>();
         List<BigInteger> res = new ArrayList<>();
