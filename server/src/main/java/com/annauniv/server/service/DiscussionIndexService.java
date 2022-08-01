@@ -24,7 +24,7 @@ public class DiscussionIndexService {
 
     Timestamp instant= Timestamp.from(Instant.now());
     private final DiscussionIndexJpaRepository discussionIndexJpaRepository;
-
+    @Autowired
     private final DiscussionTextJpaRepository discussionTextJpaRepository;
 
     @Autowired

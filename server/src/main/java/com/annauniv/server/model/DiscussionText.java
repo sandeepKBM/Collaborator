@@ -9,7 +9,7 @@ import javax.persistence.TemporalType;
 import java.math.BigInteger;
 import java.util.Date;
 
-@Document
+@Document()
 public class DiscussionText {
 
 

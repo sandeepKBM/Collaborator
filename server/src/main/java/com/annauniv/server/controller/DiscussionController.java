@@ -22,6 +22,7 @@ public class DiscussionController {
 
     // getting the object of the Timestamp class
     Timestamp instant = new Timestamp(date.getTime());
+    @Autowired
     private final DiscussionIndexService discussionIndexService;
     private final DiscussionTextService discussionTextService;
 
