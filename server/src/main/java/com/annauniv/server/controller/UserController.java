@@ -3,24 +3,27 @@ package com.annauniv.server.controller;
 import com.annauniv.server.authentication.UserAccountService;
 import com.annauniv.server.exception.UserAlreadyExistsException;
 import com.annauniv.server.relational.UserAccount;
+import com.annauniv.server.repository.UserAccountRepository;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
-import java.net.URI;
-
+import java.util.List;
+@CrossOrigin(origins = {"http://localhost:3000"})
 @RestController
 @RequestMapping("/api/v1/users")
 public class UserController {
 
     private final UserAccountService userAccountService;
 
-    public UserController(UserAccountService userAccountService) {
+    private final UserAccountRepository repo;
+
+    public UserController(UserAccountService userAccountService, UserAccountRepository repo) {
         this.userAccountService = userAccountService;
+        this.repo = repo;
     }
 
     @GetMapping("/{userId}")
@@ -31,6 +34,11 @@ public class UserController {
         } catch (UsernameNotFoundException e) {
             return ResponseEntity.notFound().build();
         }
+    }
+
+    @GetMapping("/all")
+    public ResponseEntity<List<UserAccount>> users() {
+        return ResponseEntity.ok(repo.findAll());
     }
 
     @PostMapping ("/save")

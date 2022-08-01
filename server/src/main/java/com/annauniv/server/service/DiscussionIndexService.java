@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.stereotype.Service;
 
+import java.math.BigInteger;
 import java.sql.Timestamp;
 import java.time.Instant;
 import java.util.ArrayList;
@@ -46,15 +47,19 @@ public class DiscussionIndexService {
         return len;
     }
 
-    public List<Long> getListofAllUniqueParticipants(Long discussionID){
+    public List<BigInteger> getListofAllUniqueParticipants(Long discussionID){
         DistinctIterable<DiscussionText> val = mongoTemplate.getCollection("discussionText").distinct("userID", DiscussionText.class);
         System.out.println(val);
-        Set<Long> result = new HashSet<>();
-        List<Long> res = new ArrayList<>();
+        Set<BigInteger> result = new HashSet<>();
+        List<BigInteger> res = new ArrayList<>();
         for(DiscussionText vals : val){
             result.add(vals.getUserID());
         }
         System.out.println(result);
         return res;
+    }
+
+    public void insertIntoDiscussionText(DiscussionText discussionText){
+        discussionTextJpaRepository.insert(discussionText);
     }
 }

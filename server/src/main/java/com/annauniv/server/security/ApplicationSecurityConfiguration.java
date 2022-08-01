@@ -34,6 +34,7 @@ public class ApplicationSecurityConfiguration {
         AuthenticationManager authenticationManager = authenticationManager(http.getSharedObject(AuthenticationConfiguration.class));
 
         http
+                .cors().disable()
                 .csrf().disable()
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 .and()
@@ -42,6 +43,7 @@ public class ApplicationSecurityConfiguration {
                 .authorizeRequests()
                 .antMatchers("/login").permitAll()
                 .antMatchers("/api/discussions/**").permitAll()
+                .antMatchers("/api/v1/users/*").permitAll()
                 .anyRequest()
                 .authenticated();
 

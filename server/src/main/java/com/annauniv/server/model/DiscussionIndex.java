@@ -22,6 +22,7 @@ public class DiscussionIndex {
     private String description;
 
     @Temporal(TemporalType.TIMESTAMP)
+
     private Date creationDateTime;
 
     @Enumerated(EnumType.STRING)

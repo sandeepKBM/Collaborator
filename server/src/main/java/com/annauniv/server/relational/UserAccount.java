@@ -15,7 +15,6 @@ import java.util.Set;
 @NoArgsConstructor
 public class UserAccount implements UserDetails {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String name;
     private String password;
@@ -86,7 +85,8 @@ public class UserAccount implements UserDetails {
         return true;
     }
 
-    public UserAccount(String name, String password, UserAccountDesignation designation) {
+    public UserAccount(Long id, String name, String password, UserAccountDesignation designation) {
+        this.id = id;
         this.name = name;
         this.password = password;
         this.designation = designation;

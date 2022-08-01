@@ -13,4 +13,5 @@ import java.util.List;
 public interface DiscussionTextJpaRepository extends MongoRepository<DiscussionText,String> {
 
     List<DiscussionText> findAllByDiscussionID(Long discussionID);
+
 }

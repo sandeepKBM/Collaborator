@@ -6,39 +6,31 @@ import org.springframework.data.mongodb.core.mapping.Field;
 
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import java.math.BigInteger;
 import java.util.Date;
 
 @Document
 public class DiscussionText {
 
-    @Id
-    private Long id;
 
     @Field
     private String Text;
 
     private Long discussionID;
 
-    private Long userID;
+    @Id
+    private BigInteger userID;
 
     @Temporal(TemporalType.TIMESTAMP)
     private Date timeStamp;
 
-    public DiscussionText(Long id, String text, Long discussionID, Long userID, Date timeStamp) {
-        this.id = id;
-        Text = text;
+    public DiscussionText( String text, Long discussionID, BigInteger userID, Date timeStamp) {
+        this.Text = text;
         this.discussionID = discussionID;
         this.userID = userID;
         this.timeStamp = timeStamp;
     }
 
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
 
     public String getText() {
         return Text;
@@ -56,11 +48,11 @@ public class DiscussionText {
         this.discussionID = discussionID;
     }
 
-    public Long getUserID() {
+    public BigInteger getUserID() {
         return userID;
     }
 
-    public void setUserID(Long userID) {
+    public void setUserID(BigInteger userID) {
         this.userID = userID;
     }
 

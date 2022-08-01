@@ -1,23 +1,21 @@
 package com.annauniv.server.controller;
 
-import com.annauniv.server.authority.UserAccountDesignation;
 import com.annauniv.server.model.DiscussionIndex;
+import com.annauniv.server.model.DiscussionText;
 import com.annauniv.server.repository.DiscussionIndexJpaRepository;
 import com.annauniv.server.repository.DiscussionTextJpaRepository;
 import com.annauniv.server.service.DiscussionIndexService;
 import com.annauniv.server.service.DiscussionTextService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.sql.Timestamp;
 import java.util.Date;
 import java.util.List;
 
 @RestController
+@CrossOrigin(origins = {"http://localhost:3000"})
 @RequestMapping("api/discussions")
 public class DiscussionController {
     Date date = new Date();
@@ -55,12 +53,17 @@ public class DiscussionController {
 
     @GetMapping("/hope")
     public String test(){
-        discussionIndexService.getListofAllUniqueParticipants(2L);
-        DiscussionIndex x = new DiscussionIndex(1L,2L,"chaos","chaos",instant, UserAccountDesignation.DEAN);
-        discussionIndexJpaRepository.save(x);
+//        discussionIndexService.getListofAllUniqueParticipants(2L);
+//        DiscussionIndex x = new DiscussionIndex(1L,2L,"chaos","chaos",instant, UserAccountDesignation.DEAN);
+//        discussionIndexJpaRepository.save(x);
 
         return "works";
 
+    }
+    @PostMapping("/insertchart")
+    public void insertDiscussionChat(DiscussionText discussionText){
+        System.out.println(discussionText);
+        discussionIndexService.insertIntoDiscussionText(discussionText);
     }
 
 
