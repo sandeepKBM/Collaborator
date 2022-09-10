@@ -24,21 +24,21 @@ public class UserAccountDaoService implements UserAccountDao {
 
     @Override
     @Transactional
-    public Optional<UserAccount> getUserById(Long id) {
+    public Optional<UserAccount> getUserById(String id) {
         return userAccountRepository.findById(id);
     }
 
     @Override
     @Transactional
     public UserAccount addUser(UserAccount user) throws UserAlreadyExistsException {
-        Optional<UserAccount> checkUser = userAccountRepository.findById(user.getId());
+        Optional<UserAccount> checkUser = userAccountRepository.findById(user.getUsername());
 
         if (checkUser.isEmpty()) {
             String unencryptedPassword = user.getPassword();
             user.setPassword(passwordEncoder.encode(unencryptedPassword));
             return userAccountRepository.saveAndFlush(user);
         } else {
-            throw new UserAlreadyExistsException(String.format("User with id %d already exists", user.getId()));
+            throw new UserAlreadyExistsException(String.format("User with id %s already exists", user.getUsername()));
         }
     }
 }

@@ -6,7 +6,7 @@ import com.annauniv.server.relational.UserAccount;
 import java.util.Optional;
 
 public interface UserAccountDao {
-    Optional<UserAccount> getUserById(Long id);
+    Optional<UserAccount> getUserById(String id);
 
     UserAccount addUser(UserAccount user) throws UserAlreadyExistsException;
 }

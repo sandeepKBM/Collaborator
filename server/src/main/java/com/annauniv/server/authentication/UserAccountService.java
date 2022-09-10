@@ -18,15 +18,9 @@ public class UserAccountService implements UserAccountDetails {
     }
 
     @Override
-    public UserDetails loadUserByUsername(String idAsString) throws UsernameNotFoundException {
-        try {
-            Long id = Long.parseLong(idAsString);
-
-            return userAccountDao.getUserById(id)
-                    .orElseThrow(() -> new UsernameNotFoundException(String.format("No user with id %d", id)));
-        } catch (NumberFormatException e) {
-            throw new RuntimeException("Given id is not a number");
-        }
+    public UserDetails loadUserByUsername(String id) throws UsernameNotFoundException {
+        return userAccountDao.getUserById(id)
+                .orElseThrow(() -> new UsernameNotFoundException(String.format("No user with id %s", id)));
     }
 
     @Override

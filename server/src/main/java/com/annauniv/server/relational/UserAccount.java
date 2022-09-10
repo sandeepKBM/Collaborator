@@ -15,7 +15,7 @@ import java.util.Set;
 @NoArgsConstructor
 public class UserAccount implements UserDetails {
     @Id
-    private Long id;
+    private String id;
     private String name;
     private String password;
 
@@ -29,11 +29,15 @@ public class UserAccount implements UserDetails {
 
     @Override
     public String getUsername() {
-        return Long.toString(id);
+        return id;
     }
 
-    public Long getId() {
+    public String getId() {
         return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
     }
 
     public String getName() {
@@ -85,10 +89,19 @@ public class UserAccount implements UserDetails {
         return true;
     }
 
-    public UserAccount(Long id, String name, String password, UserAccountDesignation designation) {
+    public UserAccount(String id, String name, String password, UserAccountDesignation designation) {
         this.id = id;
         this.name = name;
         this.password = password;
         this.designation = designation;
+    }
+
+    @Override
+    public String toString() {
+        return "UserAccount{" +
+                "id='" + id + '\'' +
+                ", name='" + name + '\'' +
+                ", designation=" + designation +
+                '}';
     }
 }

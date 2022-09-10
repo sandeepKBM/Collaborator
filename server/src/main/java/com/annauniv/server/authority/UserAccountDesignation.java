@@ -11,7 +11,7 @@ import java.util.stream.Collectors;
 public enum UserAccountDesignation {
     STUDENT,
     PROFESSOR,
-    HEAD_OF_DEPARTMENT,
+    HOD,
     DEAN;
 
     private final Set<UserAccountPermission> permissions;

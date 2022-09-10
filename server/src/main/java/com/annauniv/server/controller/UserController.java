@@ -19,18 +19,18 @@ public class UserController {
 
     private final UserAccountService userAccountService;
 
-    private final UserAccountRepository repo;
+    private final UserAccountRepository repository;
 
-    public UserController(UserAccountService userAccountService, UserAccountRepository repo) {
+    public UserController(UserAccountService userAccountService, UserAccountRepository repository) {
         this.userAccountService = userAccountService;
-        this.repo = repo;
+        this.repository = repository;
     }
 
     @GetMapping("/{userId}")
-    @PreAuthorize("hasAnyRole('ROLE_HEAD_OF_DEPARTMENT', 'ROLE_DEAN')")
-    public ResponseEntity<UserDetails> getUser(@PathVariable("userId") Long userId) {
+    @PreAuthorize("hasAnyRole('ROLE_HOD', 'ROLE_DEAN')")
+    public ResponseEntity<UserDetails> getUser(@PathVariable("userId") String userId) {
         try {
-            return ResponseEntity.ok(userAccountService.loadUserByUsername(Long.toString(userId)));
+            return ResponseEntity.ok(userAccountService.loadUserByUsername(userId));
         } catch (UsernameNotFoundException e) {
             return ResponseEntity.notFound().build();
         }
@@ -38,7 +38,7 @@ public class UserController {
 
     @GetMapping("/all")
     public ResponseEntity<List<UserAccount>> users() {
-        return ResponseEntity.ok(repo.findAll());
+        return ResponseEntity.ok(repository.findAll());
     }
 
     @PostMapping ("/save")
