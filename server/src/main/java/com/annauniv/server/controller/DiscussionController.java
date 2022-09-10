@@ -1,5 +1,6 @@
 package com.annauniv.server.controller;
 
+import com.annauniv.server.authority.UserAccountDesignation;
 import com.annauniv.server.model.DiscussionIndex;
 import com.annauniv.server.model.DiscussionText;
 import com.annauniv.server.repository.DiscussionIndexJpaRepository;
@@ -7,9 +8,11 @@ import com.annauniv.server.repository.DiscussionTextJpaRepository;
 import com.annauniv.server.service.DiscussionIndexService;
 import com.annauniv.server.service.DiscussionTextService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.mongodb.core.MongoOperations;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.math.BigInteger;
 import java.sql.Timestamp;
 import java.util.Date;
 import java.util.List;
@@ -18,6 +21,9 @@ import java.util.List;
 @CrossOrigin(origins = {"http://localhost:3000"})
 @RequestMapping("api/discussions")
 public class DiscussionController {
+
+    @Autowired
+    MongoOperations mongoOperations;
     Date date = new Date();
 
     // getting the object of the Timestamp class
@@ -52,19 +58,30 @@ public class DiscussionController {
         return ResponseEntity.ok(siz);
     }
 
-    @GetMapping("/hope")
-    public String test(){
-//        discussionIndexService.getListofAllUniqueParticipants(2L);
-//        DiscussionIndex x = new DiscussionIndex(1L,2L,"chaos","chaos",instant, UserAccountDesignation.DEAN);
-//        discussionIndexJpaRepository.save(x);
-
-        return "works";
-
+    @PostMapping("/insertchat")
+    public void insertDiscussionChat(@RequestParam String Text,@RequestParam Long dissID,@RequestParam BigInteger userID){
+        DiscussionText obj = new DiscussionText(Text,dissID,userID,instant);
+        discussionIndexService.insertIntoDiscussionText(obj);
     }
-    @PostMapping("/insertchart")
-    public void insertDiscussionChat(DiscussionText discussionText){
-        System.out.println(discussionText);
-        discussionIndexService.insertIntoDiscussionText(discussionText);
+
+//    @GetMapping("/tester")
+//    public void tester(@Re){
+//
+//    }
+    @GetMapping("/alltext")
+    public List<DiscussionText> getAllDiscussionText(){
+        return discussionIndexService.getAllDiscussionText();
+    }
+
+    @GetMapping("/alldisstext")
+    public List<DiscussionText> getAllDiscussionText(@RequestParam Long disscussionID){
+
+            return discussionIndexService.getUserDiscussionText(disscussionID);
+    }
+
+    @PostMapping("/insertDiscusssion")
+    public void insertDiscussion(@RequestParam Long userid ,@RequestParam Long discussionId,@RequestParam String discussionName,@RequestParam String description){
+        discussionIndexService.insertDiscussion(discussionId,userid,discussionName,description,UserAccountDesignation.PROFESSOR);
     }
 
 

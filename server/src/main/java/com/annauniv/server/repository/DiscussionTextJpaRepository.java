@@ -14,4 +14,6 @@ public interface DiscussionTextJpaRepository extends MongoRepository<DiscussionT
 
     List<DiscussionText> findAllByDiscussionID(Long discussionID);
 
+    List<DiscussionText> findAllByDiscussionIDAndAndUserID(Long discussionID, Long userID);
+
 }

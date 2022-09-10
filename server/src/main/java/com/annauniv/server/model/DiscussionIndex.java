@@ -44,6 +44,8 @@ public class DiscussionIndex {
         this.AccessClass = accessClass;
     }
 
+
+
     public Long getId() {
         return id;
     }
