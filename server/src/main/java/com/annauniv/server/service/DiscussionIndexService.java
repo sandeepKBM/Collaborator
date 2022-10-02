@@ -55,11 +55,11 @@ public class DiscussionIndexService {
         return len;
     }
 
-    public List<BigInteger> getListofAllUniqueParticipants(Long discussionID){
+    public List<Integer> getListofAllUniqueParticipants(Long discussionID){
         DistinctIterable<DiscussionText> val = mongoTemplate.getCollection("DiscussionText").distinct("userID", DiscussionText.class);
         System.out.println(val);
-        Set<BigInteger> result = new HashSet<>();
-        List<BigInteger> res = new ArrayList<>();
+        Set<Integer> result = new HashSet<>();
+        List<Integer> res = new ArrayList<>();
         for(DiscussionText vals : val){
             result.add(vals.getUserID());
         }

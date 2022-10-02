@@ -27,16 +27,15 @@ public class DiscussionText {
     private Long discussionID;
 
     @Field
-    private BigInteger userID;
+    private Integer userID;
 
     @Temporal(TemporalType.TIMESTAMP)
     private Date timeStamp;
 
-    public DiscussionText( String text, Long discussionID, BigInteger userID, Date timeStamp) {
+    public DiscussionText( String text, Long discussionID, Integer userID) {
         this.Text = text;
         this.discussionID = discussionID;
         this.userID = userID;
-        this.timeStamp = timeStamp;
     }
 
 
@@ -56,11 +55,11 @@ public class DiscussionText {
         this.discussionID = discussionID;
     }
 
-    public BigInteger getUserID() {
+    public Integer getUserID() {
         return userID;
     }
 
-    public void setUserID(BigInteger userID) {
+    public void setUserID(Integer userID) {
         this.userID = userID;
     }
 

@@ -59,8 +59,8 @@ public class DiscussionController {
     }
 
     @PostMapping("/insertchat")
-    public void insertDiscussionChat(@RequestParam String Text,@RequestParam Long dissID,@RequestParam BigInteger userID){
-        DiscussionText obj = new DiscussionText(Text,dissID,userID,instant);
+    public void insertDiscussionChat(@RequestParam String Text,@RequestParam Long dissID,@RequestParam Integer userID){
+        DiscussionText obj = new DiscussionText(Text,dissID,userID);
         discussionIndexService.insertIntoDiscussionText(obj);
     }
 
