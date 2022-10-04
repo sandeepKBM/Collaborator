@@ -46,6 +46,7 @@ public class ApplicationSecurityConfiguration {
                 .authorizeRequests()
                 .antMatchers("/login").permitAll()
                 .antMatchers("/api/discussions/**").permitAll()
+                .antMatchers("/api/newsletter/**").permitAll()
                 .antMatchers("/api/v1/users/*").permitAll()
                 .anyRequest()
                 .authenticated();

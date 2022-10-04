@@ -13,7 +13,7 @@ import java.util.List;
 
 @RestController
 @CrossOrigin(origins = {"http://localhost:3000"})
-@RequestMapping("api/discussions")
+@RequestMapping("api/newsletter")
 public class NewsletterController {
     @Autowired
     MongoOperations mongoOperations;
