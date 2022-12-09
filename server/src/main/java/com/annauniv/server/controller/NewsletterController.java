@@ -38,7 +38,7 @@ public class NewsletterController {
 
     @GetMapping("/receiveNews")
     public void getData(){
-        String uri = "http://localhost:8000/getNews";
+        String uri = "http://127.0.0.1:8000/getNews";
         String ans = newsletterService.fetchData(uri);
         System.out.println(ans);
     }
