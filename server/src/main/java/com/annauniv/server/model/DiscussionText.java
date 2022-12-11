@@ -20,6 +20,8 @@ public class DiscussionText {
     @Id
     @GeneratedValue(strategy=GenerationType.AUTO)
     private BigInteger id;
+
+    private Long parentId;
     @Field
     private String Text;
 
@@ -39,6 +41,17 @@ public class DiscussionText {
         this.timeStamp = timeStamp;
     }
 
+    public DiscussionText(Long parentId, String text, Long discussionID, BigInteger userID, Date timeStamp) {
+        this.parentId = parentId;
+        Text = text;
+        this.discussionID = discussionID;
+        this.userID = userID;
+        this.timeStamp = timeStamp;
+    }
+
+    public Long getParentId() { return parentId; }
+
+    public void setParentId(Long parentId) { this.parentId = parentId; }
 
     public String getText() {
         return Text;

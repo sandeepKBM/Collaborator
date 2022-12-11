@@ -59,8 +59,8 @@ public class DiscussionController {
     }
 
     @PostMapping("/insertchat")
-    public void insertDiscussionChat(@RequestParam String Text,@RequestParam Long dissID,@RequestParam BigInteger userID){
-        DiscussionText obj = new DiscussionText(Text,dissID,userID,instant);
+    public void insertDiscussionChat(@RequestParam Long parentId, @RequestParam String Text,@RequestParam Long dissID,@RequestParam BigInteger userID){
+        DiscussionText obj = new DiscussionText(parentId, Text,dissID,userID,instant);
         discussionIndexService.insertIntoDiscussionText(obj);
     }
 
@@ -80,8 +80,8 @@ public class DiscussionController {
     }
 
     @PostMapping("/insertDiscusssion")
-    public void insertDiscussion(@RequestParam Long userid ,@RequestParam Long discussionId, @RequestParam Long parentId, @RequestParam String discussionName,@RequestParam String description){
-        discussionIndexService.insertDiscussion(discussionId,userid,parentId,discussionName,description,UserAccountDesignation.PROFESSOR);
+    public void insertDiscussion(@RequestParam Long userid ,@RequestParam Long discussionId, @RequestParam String discussionName,@RequestParam String description){
+        discussionIndexService.insertDiscussion(discussionId,userid,discussionName,description,UserAccountDesignation.PROFESSOR);
     }
 
 

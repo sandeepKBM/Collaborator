@@ -12,7 +12,6 @@ import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.RequestParam;
 
 import java.math.BigInteger;
 import java.sql.Timestamp;
@@ -88,8 +87,8 @@ public class DiscussionIndexService {
         return res;
     }
 
-    public void insertDiscussion(Long id,Long discussionId, Long parentId, String discussionName, String text, UserAccountDesignation accessClass){
-        DiscussionIndex vals = new DiscussionIndex(id,discussionId,parentId,discussionName,text,instant,accessClass);
+    public void insertDiscussion(Long id, Long discussionId, String discussionName, String text, UserAccountDesignation accessClass){
+        DiscussionIndex vals = new DiscussionIndex(id,discussionId,discussionName,text,instant,accessClass);
         discussionIndexJpaRepository.save(vals);
     }
 }
