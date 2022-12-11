@@ -14,6 +14,8 @@ public class DiscussionIndex {
 
     @Id
     private Long id;
+    
+    private Long parentId;
 
     private Long discussionId;
 
@@ -37,14 +39,22 @@ public class DiscussionIndex {
         this.AccessClass = accessClass;
     }
 
+    public DiscussionIndex(Long id, Long parentId, Long discussionId, String discussionName, String description, Date creationDateTime, UserAccountDesignation accessClass) {
+        this.id = id;
+        this.parentId = parentId;
+        this.discussionId = discussionId;
+        this.discussionName = discussionName;
+        this.description = description;
+        this.creationDateTime = creationDateTime;
+        AccessClass = accessClass;
+    }
+
     public DiscussionIndex(Long discussionId, String discussionName, String description, UserAccountDesignation accessClass) {
         this.discussionId = discussionId;
         this.discussionName = discussionName;
         this.description = description;
         this.AccessClass = accessClass;
     }
-
-
 
     public Long getId() {
         return id;
@@ -53,6 +63,10 @@ public class DiscussionIndex {
     public void setId(Long id) {
         this.id = id;
     }
+
+    public Long getParentId() { return parentId; }
+
+    public void setParentId(Long parentId) { this.parentId = parentId; }
 
     public Long getDiscussionId() {
         return discussionId;

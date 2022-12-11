@@ -80,8 +80,8 @@ public class DiscussionController {
     }
 
     @PostMapping("/insertDiscusssion")
-    public void insertDiscussion(@RequestParam Long userid ,@RequestParam Long discussionId,@RequestParam String discussionName,@RequestParam String description){
-        discussionIndexService.insertDiscussion(discussionId,userid,discussionName,description,UserAccountDesignation.PROFESSOR);
+    public void insertDiscussion(@RequestParam Long userid ,@RequestParam Long discussionId, @RequestParam Long parentId, @RequestParam String discussionName,@RequestParam String description){
+        discussionIndexService.insertDiscussion(discussionId,userid,parentId,discussionName,description,UserAccountDesignation.PROFESSOR);
     }
 
 
