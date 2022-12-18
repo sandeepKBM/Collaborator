@@ -6,16 +6,16 @@ import com.annauniv.server.jwt.JwtUsernameAndPasswordAuthenticationFilter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.access.hierarchicalroles.RoleHierarchy;
+import org.springframework.security.access.hierarchicalroles.RoleHierarchyImpl;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
-import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.web.SecurityFilterChain;
-import org.springframework.web.servlet.config.annotation.CorsRegistry;
+
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
-import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 
 import javax.crypto.SecretKey;
 
@@ -37,7 +37,6 @@ public class ApplicationSecurityConfiguration {
         AuthenticationManager authenticationManager = authenticationManager(http.getSharedObject(AuthenticationConfiguration.class));
 
         http
-                .cors().and()
                 .csrf().disable()
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 .and()
@@ -46,7 +45,6 @@ public class ApplicationSecurityConfiguration {
                 .authorizeRequests()
                 .antMatchers("/login").permitAll()
                 .antMatchers("/api/discussions/**").permitAll()
-                .antMatchers("/api/v1/users/*").permitAll()
                 .anyRequest()
                 .authenticated();
 
@@ -57,13 +55,31 @@ public class ApplicationSecurityConfiguration {
     public AuthenticationManager authenticationManager(AuthenticationConfiguration authenticationConfiguration) throws Exception {
         return authenticationConfiguration.getAuthenticationManager();
     }
+
     @Bean
     public WebMvcConfigurer corsConfigurer() {
-        return new WebMvcConfigurerAdapter() {
-            @Override
-            public void addCorsMappings(CorsRegistry registry) {
-                registry.addMapping("/**");
-            }
-        };
+        return new MvcConfiguration();
     }
+
+    @Bean
+    public RoleHierarchy roleHierarchy() {
+        RoleHierarchyImpl roleHierarchy = new RoleHierarchyImpl();
+        String hierarchy =
+                """
+                        create:dean > create:hod
+                        create:hod > create:professor
+                        create:professor > create:student
+                        """;
+
+        roleHierarchy.setHierarchy(hierarchy);
+        return roleHierarchy;
+    }
+
+//    @Bean
+//    public DefaultWebSecurityExpressionHandler webSecurityExpressionHandler() {
+//        var expressionHandler = new DefaultWebSecurityExpressionHandler();
+//        expressionHandler.setRoleHierarchy(roleHierarchy());
+//        return expressionHandler;
+//    }
+
 }

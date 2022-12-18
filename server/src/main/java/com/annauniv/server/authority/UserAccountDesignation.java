@@ -8,11 +8,14 @@ import java.util.Arrays;
 import java.util.Set;
 import java.util.stream.Collectors;
 
+import static com.annauniv.server.authority.UserAccountPermission.*;
+
 public enum UserAccountDesignation {
     STUDENT,
-    PROFESSOR,
-    HOD,
-    DEAN;
+    PROFESSOR(VIEW_DETAILS),
+    HOD(CREATE_STUDENT, CREATE_PROFESSOR, VIEW_DETAILS),
+    DEAN(CREATE_STUDENT, CREATE_PROFESSOR, CREATE_HOD, CREATE_DEAN, VIEW_DETAILS);
+
 
     private final Set<UserAccountPermission> permissions;
 

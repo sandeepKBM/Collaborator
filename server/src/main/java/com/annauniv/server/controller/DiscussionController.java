@@ -4,7 +4,7 @@ import com.annauniv.server.authority.UserAccountDesignation;
 import com.annauniv.server.model.DiscussionIndex;
 import com.annauniv.server.model.DiscussionText;
 import com.annauniv.server.repository.DiscussionIndexJpaRepository;
-import com.annauniv.server.repository.DiscussionTextJpaRepository;
+import com.annauniv.server.repository.DiscussionTextMongoRepository;
 import com.annauniv.server.service.DiscussionIndexService;
 import com.annauniv.server.service.DiscussionTextService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,16 +32,16 @@ public class DiscussionController {
     private final DiscussionIndexService discussionIndexService;
     private final DiscussionTextService discussionTextService;
 
-    private final DiscussionTextJpaRepository discussionTextJpaRepository;
+    private final DiscussionTextMongoRepository discussionTextMongoRepository;
 
     private final DiscussionIndexJpaRepository discussionIndexJpaRepository;
 
 
     @Autowired
-    public DiscussionController(DiscussionIndexService discussionIndexService, DiscussionTextService discussionTextService, DiscussionTextJpaRepository discussionTextJpaRepository, DiscussionIndexJpaRepository discussionIndexJpaRepository) {
+    public DiscussionController(DiscussionIndexService discussionIndexService, DiscussionTextService discussionTextService, DiscussionTextMongoRepository discussionTextMongoRepository, DiscussionIndexJpaRepository discussionIndexJpaRepository) {
         this.discussionIndexService = discussionIndexService;
         this.discussionTextService = discussionTextService;
-        this.discussionTextJpaRepository = discussionTextJpaRepository;
+        this.discussionTextMongoRepository = discussionTextMongoRepository;
         this.discussionIndexJpaRepository = discussionIndexJpaRepository;
     }
 

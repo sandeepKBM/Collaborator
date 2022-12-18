@@ -4,7 +4,7 @@ import com.annauniv.server.authority.UserAccountDesignation;
 import com.annauniv.server.model.DiscussionIndex;
 import com.annauniv.server.model.DiscussionText;
 import com.annauniv.server.repository.DiscussionIndexJpaRepository;
-import com.annauniv.server.repository.DiscussionTextJpaRepository;
+import com.annauniv.server.repository.DiscussionTextMongoRepository;
 import com.mongodb.client.DistinctIterable;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.core.MongoOperations;
@@ -32,12 +32,12 @@ public class DiscussionIndexService {
     Timestamp instant= Timestamp.from(Instant.now());
     private final DiscussionIndexJpaRepository discussionIndexJpaRepository;
     @Autowired
-    private final DiscussionTextJpaRepository discussionTextJpaRepository;
+    private final DiscussionTextMongoRepository discussionTextMongoRepository;
 
     @Autowired
-    public DiscussionIndexService(DiscussionIndexJpaRepository discussionIndexJpaRepository, DiscussionTextJpaRepository discussionTextJpaRepository) {
+    public DiscussionIndexService(DiscussionIndexJpaRepository discussionIndexJpaRepository, DiscussionTextMongoRepository discussionTextMongoRepository) {
         this.discussionIndexJpaRepository = discussionIndexJpaRepository;
-        this.discussionTextJpaRepository = discussionTextJpaRepository;
+        this.discussionTextMongoRepository = discussionTextMongoRepository;
     }
 
     public List<DiscussionIndex> listAllDiscussion(){

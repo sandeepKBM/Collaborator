@@ -2,7 +2,9 @@ package com.annauniv.server.relational;
 
 import javax.persistence.*;
 
+import com.annauniv.server.authority.UserAccountDepartment;
 import com.annauniv.server.authority.UserAccountDesignation;
+import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -13,14 +15,19 @@ import java.util.Set;
 
 @Entity(name = "User")
 @NoArgsConstructor
+@AllArgsConstructor
 public class UserAccount implements UserDetails {
     @Id
-    private String id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
     private String name;
+    private String email;
     private String password;
 
     @Enumerated(EnumType.STRING)
     private UserAccountDesignation designation;
+    @Enumerated(EnumType.STRING)
+    private UserAccountDepartment department;
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
@@ -29,15 +36,11 @@ public class UserAccount implements UserDetails {
 
     @Override
     public String getUsername() {
-        return id;
+        return Long.toString(id);
     }
 
-    public String getId() {
+    public Long getId() {
         return id;
-    }
-
-    public void setId(String id) {
-        this.id = id;
     }
 
     public String getName() {
@@ -46,6 +49,14 @@ public class UserAccount implements UserDetails {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
     }
 
     public void setPassword(String password) {
@@ -58,6 +69,14 @@ public class UserAccount implements UserDetails {
 
     public void setDesignation(UserAccountDesignation designation) {
         this.designation = designation;
+    }
+
+    public UserAccountDepartment getDepartment() {
+        return department;
+    }
+
+    public void setDepartment(UserAccountDepartment department) {
+        this.department = department;
     }
 
     public Set<GrantedAuthority> getGrantedAuthorities () {
@@ -87,21 +106,5 @@ public class UserAccount implements UserDetails {
     @Override
     public boolean isEnabled() {
         return true;
-    }
-
-    public UserAccount(String id, String name, String password, UserAccountDesignation designation) {
-        this.id = id;
-        this.name = name;
-        this.password = password;
-        this.designation = designation;
-    }
-
-    @Override
-    public String toString() {
-        return "UserAccount{" +
-                "id='" + id + '\'' +
-                ", name='" + name + '\'' +
-                ", designation=" + designation +
-                '}';
     }
 }
