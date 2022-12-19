@@ -1,4 +1,4 @@
-package com.annauniv.server.security;
+package com.annauniv.server.service.security;
 
 import com.annauniv.server.jwt.JwtConfiguration;
 import com.annauniv.server.jwt.JwtTokenVerifier;

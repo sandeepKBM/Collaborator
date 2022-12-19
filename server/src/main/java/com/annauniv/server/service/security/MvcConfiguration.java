@@ -1,4 +1,4 @@
-package com.annauniv.server.security;
+package com.annauniv.server.service.security;
 
 import org.springframework.lang.NonNull;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;

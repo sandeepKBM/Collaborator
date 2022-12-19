@@ -1,8 +1,9 @@
 package com.annauniv.server.controller;
 
 import com.annauniv.server.authentication.UserAccountService;
-import com.annauniv.server.authority.UserAccountDesignation;
 import com.annauniv.server.exception.UserAlreadyExistsException;
+import com.annauniv.server.mail.MailConfiguration;
+import com.annauniv.server.mail.Mailer;
 import com.annauniv.server.relational.UserAccount;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -18,10 +19,14 @@ import static com.annauniv.server.authority.UserAccountDesignation.*;
 @RequestMapping("/api/v1/users/save")
 public class SaveController {
     private final UserAccountService userAccountService;
+    private final MailConfiguration mailConfiguration;
+    private final Mailer mailer;
 
     @Autowired
-    public SaveController(UserAccountService userAccountService) {
+    public SaveController(UserAccountService userAccountService, MailConfiguration mailConfiguration, Mailer mailer) {
         this.userAccountService = userAccountService;
+        this.mailConfiguration = mailConfiguration;
+        this.mailer = mailer;
     }
 
     @PostMapping("/student")
@@ -62,7 +67,20 @@ public class SaveController {
 
     private ResponseEntity<UserDetails> saveUser(UserAccount userAccount) {
         try {
+            String recipient = userAccount.getEmail();
+
+            String body = String.format(mailConfiguration.getBodyFormat(),
+                    userAccount.getUsername(),
+                    userAccount.getPassword()
+            );
+
             UserDetails addedUser = userAccountService.saveUser(userAccount);
+
+            mailer.sendMail(
+                    recipient,
+                    mailConfiguration.getSubject(),
+                    body
+            );
 
             return new ResponseEntity<>(addedUser, HttpStatus.CREATED);
         } catch (UserAlreadyExistsException e) {

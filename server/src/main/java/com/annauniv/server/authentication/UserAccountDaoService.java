@@ -32,6 +32,7 @@ public class UserAccountDaoService implements UserAccountDao {
     @Transactional
     public UserAccount addUser(UserAccount user) throws UserAlreadyExistsException {
         Optional<UserAccount> checkUser = userAccountRepository.findById(user.getUsername());
+        System.out.println(user);
 
         if (checkUser.isEmpty()) {
             String unencryptedPassword = user.getPassword();

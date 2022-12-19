@@ -18,8 +18,7 @@ import java.util.Set;
 @AllArgsConstructor
 public class UserAccount implements UserDetails {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private String id;
     private String name;
     private String email;
     private String password;
@@ -36,11 +35,15 @@ public class UserAccount implements UserDetails {
 
     @Override
     public String getUsername() {
-        return Long.toString(id);
+        return id;
     }
 
-    public Long getId() {
+    public String getId() {
         return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
     }
 
     public String getName() {
@@ -80,7 +83,7 @@ public class UserAccount implements UserDetails {
     }
 
     public Set<GrantedAuthority> getGrantedAuthorities () {
-        return Collections.emptySet();
+        return designation.getGrantedAuthorities();
     }
 
     @Override
@@ -106,5 +109,17 @@ public class UserAccount implements UserDetails {
     @Override
     public boolean isEnabled() {
         return true;
+    }
+
+    @Override
+    public String toString() {
+        return "UserAccount{" +
+                "id='" + id + '\'' +
+                ", name='" + name + '\'' +
+                ", email='" + email + '\'' +
+                ", password='" + password + '\'' +
+                ", designation=" + designation +
+                ", department=" + department +
+                '}';
     }
 }
